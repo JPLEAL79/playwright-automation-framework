@@ -9,8 +9,8 @@ node_modules/
 /playwright/.auth/
 
 # Environment files
-.env*
-!.env.example
+config/environments/.env*
+!config/environments/.env.example
 
 # Logs
 *.log

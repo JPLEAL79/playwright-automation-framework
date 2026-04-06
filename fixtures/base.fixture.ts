@@ -2,13 +2,13 @@ import { test as base, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
 
-// Shared credentials loaded from the selected environment file.
+// Test credentials.
 type Credentials = {
   username: string;
   password: string;
 };
 
-// Custom fixtures available across the test suite.
+// Shared fixtures.
 type AppFixtures = {
   credentials: Credentials;
   loginPage: LoginPage;
@@ -18,6 +18,7 @@ type AppFixtures = {
 
 export const test = base.extend<AppFixtures>({
   credentials: async ({}, use) => {
+    // Read credentials from the environment.
     const username = process.env.SAUCE_USERNAME;
     const password = process.env.SAUCE_PASSWORD;
 
@@ -31,19 +32,23 @@ export const test = base.extend<AppFixtures>({
   },
 
   loginPage: async ({ page }, use) => {
+    // Create the login page object.
     await use(new LoginPage(page));
   },
 
   inventoryPage: async ({ page }, use) => {
+    // Create the inventory page object.
     await use(new InventoryPage(page));
   },
 
+  // Log in before the test starts.
   authenticatedUser: async ({ loginPage, credentials }, use) => {
-    // Start the test with a logged-in user.
+    // Start with a logged-in user.
     await loginPage.openApplication();
     await loginPage.login(credentials.username, credentials.password);
     await use();
   },
 });
 
+// Re-export expect from the shared fixture file.
 export { expect };
