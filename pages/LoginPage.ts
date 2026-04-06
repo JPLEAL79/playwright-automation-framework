@@ -1,4 +1,4 @@
-import { Locator, Page } from '@playwright/test';
+import { expect, Locator, Page } from '@playwright/test';
 
 export class LoginPage {
   // Store the Playwright page instance used by this page object.
@@ -31,13 +31,19 @@ export class LoginPage {
     await this.loginButton.click();
   }
 
+  // Verify that a successful login redirects the user to the next page.
+  async expectSuccessfulLogin(): Promise<void> {
+    await expect(this.page).toHaveURL(/inventory/);
+    await expect(this.page.getByText('Products')).toBeVisible();
+  }
+
   // Submit the form without typing credentials.
   async submitLogin(): Promise<void> {
     await this.loginButton.click();
   }
 
-  // Read the validation message shown after a failed login attempt.
-  async getErrorMessage(): Promise<string> {
-    return (await this.errorMessage.textContent())?.trim() ?? '';
+  // Verify the validation message shown for a missing username.
+  async expectUsernameRequiredError(): Promise<void> {
+    await expect(this.errorMessage).toHaveText('Epic sadface: Username is required');
   }
 }

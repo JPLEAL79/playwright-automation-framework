@@ -1,7 +1,13 @@
-import { test, expect } from '../../fixtures/base.fixture';
+import { test } from '../../fixtures/base.fixture';
 
 test.describe('Inventory - Add T-Shirt to Cart', () => {
-  test('should add a T-Shirt to the cart successfully', async ({ page, inventoryPage, authenticatedUser }) => {
+  test('should add a T-Shirt to the cart successfully', async ({ inventoryPage, authenticatedUser }) => {
+    // Start the test with an authenticated user.
+    authenticatedUser;
+
+    // Verify the inventory page is displayed after login.
+    await inventoryPage.expectLoaded();
+
     // Add the T-Shirt from the inventory page.
     await inventoryPage.addItemToCart();
 
@@ -9,6 +15,6 @@ test.describe('Inventory - Add T-Shirt to Cart', () => {
     await inventoryPage.openShoppingCart();
 
     // Verify that the selected item is visible in the cart.
-    await expect(page.getByRole('link', { name: 'Sauce Labs Bolt T-Shirt' })).toBeVisible();
+    await inventoryPage.expectItemInCart();
   });
 });
