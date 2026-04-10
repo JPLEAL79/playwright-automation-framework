@@ -1,5 +1,5 @@
 {
-  "name": "playwright-lab",
+  "name": "playwright-automation-framework",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
     "test:qa": "set TEST_ENV=qa&& playwright test"
   },
   "keywords": [],
-  "author": "",
+  "author": "Juan Pablo Leal",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {

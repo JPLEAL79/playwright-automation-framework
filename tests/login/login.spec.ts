@@ -1,26 +1,22 @@
-import { test, expect } from '../../fixtures/base.fixture';
-import { AUTH_ERROR_MESSAGES } from '../constants/auth.constants';
-import { INVENTORY_ROUTES, INVENTORY_UI_TEXT } from '../constants/inventory.constants';
+import { test } from '../../fixtures/base.fixture';
+import { logger } from '../../utils/logger';
 
-test.describe('Authentication - Login Flow', () => {
-  test.beforeEach(async ({ loginPage }) => {
-    // Open the application before each login scenario.
-    await loginPage.openApplication();
-  });
+test.describe('Login', () => {
+  test.beforeEach(async ({ loginPage }) => await loginPage.openApplication());
 
-  test('should login successfully with valid credentials', async ({ page, loginPage, credentials }) => {
-    // Log in with environment-based credentials.
+  test('logs in successfully with valid credentials', async ({ loginPage, credentials }) => {
+    logger.info('Starting valid login test.');
     await loginPage.login(credentials.username, credentials.password);
-
-    // Verify that the inventory page is displayed.
-    await expect(page).toHaveURL(INVENTORY_ROUTES.page);
-    await expect(page.getByText(INVENTORY_UI_TEXT.title)).toBeVisible();
+    await loginPage.assertSuccessfulLogin();
+    logger.info('Login completed successfully.');
   });
 
-  test('should show an error when credentials are empty', async ({ loginPage }) => {
-    await loginPage.submitLogin();
+  test('does not allow login with empty credentials', async ({ loginPage }) => {
+    logger.info('Starting empty login validation.');
 
-    // Verify the validation message for missing username.
-    expect(await loginPage.getErrorMessage()).toBe(AUTH_ERROR_MESSAGES.usernameRequired);
+    // Submit without credentials.
+    await loginPage.submitLogin();
+    await loginPage.assertUsernameRequiredError();
+    logger.info('The username required message is visible.');
   });
 });
