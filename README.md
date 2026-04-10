@@ -17,61 +17,71 @@ This repository implements an automated test framework for SauceDemo using:
 ---
 
 ## Setup
-npm install
-npx playwright install
+- npm install
+- npx playwright install
 
 ---
 
 ## Execution
 
 ### All tests
-npm test
+- npm test
 
 ---
 
 ### By environment
-npm run test:dev
-npm run test:qa
+- npm run test:dev
+- npm run test:qa
 
 ---
 
 ### Specific execution
-npx playwright test tests/login/login.spec.ts
-npx playwright test -g "logs in successfully with valid credentials"
-npx playwright test --project=chrome
+- npx playwright test tests/login/login.spec.ts
+- npx playwright test -g "logs in successfully with valid credentials"
+- npx playwright test --project=chrome
 
 ---
 
 ### Debug
-npx playwright test --debug
-await page.pause();
+- npx playwright test --debug
+- await page.pause();
 
 ---
 
 ### Report
-npx playwright show-report
+- npx playwright show-report
 
 ---
 
 ## Environment
+
+Use `.env.example` as the base template and create local environment files as needed.
+
+```text
 config/environments/.env.<environment>
+```
+
 Example:
+
+```env
 TEST_ENV=dev
 BASE_URL=https://www.saucedemo.com
 SAUCE_USERNAME=standard_user
 SAUCE_PASSWORD=secret_sauce
+```
 
 ---
 
 ## Project Structure
 
+```text
 playwright-automation-framework
 |
 |-- config/                      Environment configuration
-|   |-- environments/            .env files by target environment
-|       |-- .env.dev
-|       |-- .env.qa
+|   |-- environments/            Local `.env` files and shared template
 |       |-- .env.example
+|       |-- .env.dev             Local only, not committed
+|       |-- .env.qa              Local only, not committed
 |
 |-- fixtures/                    Shared fixtures and reusable states
 |   |-- base.fixture.ts
@@ -99,12 +109,14 @@ playwright-automation-framework
 |-- package.json                 Dependencies and scripts
 |-- tsconfig.json                TypeScript configuration
 |-- README.md                    Project documentation
+```
 
 ---
 
 ## Notes
 
 - Credentials are managed through `.env` files
+- Only `.env.example` is versioned; environment-specific `.env` files stay local
 - Fixtures centralize setup and reusable state
 - Test data is separated from test logic
 - The framework follows the Page Object Model pattern
