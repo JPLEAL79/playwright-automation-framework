@@ -55,6 +55,8 @@ This repository implements an automated test framework for SauceDemo using:
 
 ## Environment
 
+Use `.env.example` as the base template and create local environment files as needed.
+
 ```text
 config/environments/.env.<environment>
 ```
@@ -76,10 +78,10 @@ SAUCE_PASSWORD=secret_sauce
 playwright-automation-framework
 |
 |-- config/                      Environment configuration
-|   |-- environments/            .env files by target environment
-|       |-- .env.dev
-|       |-- .env.qa
+|   |-- environments/            Local `.env` files and shared template
 |       |-- .env.example
+|       |-- .env.dev             Local only, not committed
+|       |-- .env.qa              Local only, not committed
 |
 |-- fixtures/                    Shared fixtures and reusable states
 |   |-- base.fixture.ts
@@ -114,6 +116,7 @@ playwright-automation-framework
 ## Notes
 
 - Credentials are managed through `.env` files
+- Only `.env.example` is versioned; environment-specific `.env` files stay local
 - Fixtures centralize setup and reusable state
 - Test data is separated from test logic
 - The framework follows the Page Object Model pattern
