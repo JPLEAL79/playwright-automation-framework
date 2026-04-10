@@ -1,6 +1,9 @@
 import { test as base, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
+import { CartPage } from '../pages/CartPage';
+import { CheckoutPage } from '../pages/CheckoutPage';
+import { OrderPage } from '../pages/OrderPage';
 
 // Test credentials.
 type Credentials = {
@@ -11,9 +14,13 @@ type Credentials = {
 // Shared fixtures.
 type AppFixtures = {
   credentials: Credentials;
+  authenticatedUser: void;
+  itemInCart: void;
   loginPage: LoginPage;
   inventoryPage: InventoryPage;
-  authenticatedUser: void;
+  cartPage: CartPage;
+  checkoutPage: CheckoutPage;
+  orderPage: OrderPage;
 };
 
 export const test = base.extend<AppFixtures>({
@@ -41,11 +48,33 @@ export const test = base.extend<AppFixtures>({
     await use(new InventoryPage(page));
   },
 
+  cartPage: async ({ page }, use) => {
+    // Create the cart page object.
+    await use(new CartPage(page));
+  },
+
+  checkoutPage: async ({ page }, use) => {
+    // Create the checkout page object.
+    await use(new CheckoutPage(page));
+  },
+
+  orderPage: async ({ page }, use) => {
+    // Create the order page object.
+    await use(new OrderPage(page));
+  },
+
   // Log in before the test starts.
   authenticatedUser: async ({ loginPage, credentials }, use) => {
     // Start with a logged-in user.
     await loginPage.openApplication();
     await loginPage.login(credentials.username, credentials.password);
+    await use();
+  },
+
+  itemInCart: async ({ authenticatedUser, inventoryPage }, use) => {
+    // Start with one item already in the cart.
+    await inventoryPage.addItemToCart();
+    await inventoryPage.openShoppingCart();
     await use();
   },
 });

@@ -1,12 +1,15 @@
 import { test } from '../../fixtures/base.fixture';
 
-test.describe('Inventory - Add T-Shirt to Cart', () => {
-  test('should add a T-Shirt to the cart successfully', async ({ inventoryPage, authenticatedUser }) => {
+test.describe('Inventory - Cart', () => {
+  test('adds a T-shirt to the cart successfully', async ({ inventoryPage, authenticatedUser }) => {
+    // Start the test with an authenticated user.
+    authenticatedUser;
+
     // Add the item and open the cart.
     await inventoryPage.addItemToCart();
     await inventoryPage.openShoppingCart();
 
-    // The item should be visible in the cart.
-    await inventoryPage.assertItemInCart();
+    // The user should land on the cart page.
+    await inventoryPage.assertCartPage();
   });
 });

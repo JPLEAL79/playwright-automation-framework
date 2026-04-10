@@ -9,6 +9,7 @@ export class LoginPage {
   private readonly passwordInput: Locator;
   private readonly loginButton: Locator;
   private readonly errorMessage: Locator;
+  private readonly productsTitle: Locator;
 
   // Initialize the page object.
   constructor(page: Page) {
@@ -17,6 +18,7 @@ export class LoginPage {
     this.passwordInput = page.getByRole('textbox', { name: 'password' });
     this.loginButton = page.getByRole('button', { name: 'Login' });
     this.errorMessage = page.locator('[data-test="error"]');
+    this.productsTitle = page.getByText('Products');
   }
 
   // Open the login page.
@@ -34,6 +36,12 @@ export class LoginPage {
   // Submit the form as-is.
   async submitLogin(): Promise<void> {
     await this.loginButton.click();
+  }
+
+  // The user should land on the inventory page after login.
+  async assertSuccessfulLogin(): Promise<void> {
+    await expect(this.page).toHaveURL(/inventory/);
+    await expect(this.productsTitle).toBeVisible();
   }
 
   // The username required message should be visible.
