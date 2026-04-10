@@ -9,7 +9,7 @@
     "test:qa": "set TEST_ENV=qa&& playwright test"
   },
   "keywords": [],
-  "author": "",
+  "author": "Juan Pablo Leal",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
