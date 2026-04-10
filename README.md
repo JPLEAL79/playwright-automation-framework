@@ -17,45 +17,46 @@ This repository implements an automated test framework for SauceDemo using:
 ---
 
 ## Setup
-npm install
-npx playwright install
+- npm install
+- npx playwright install
 
 ---
 
 ## Execution
 
 ### All tests
-npm test
+- npm test
 
 ---
 
 ### By environment
-npm run test:dev
-npm run test:qa
+- npm run test:dev
+- npm run test:qa
 
 ---
 
 ### Specific execution
-npx playwright test tests/login/login.spec.ts
-npx playwright test -g "logs in successfully with valid credentials"
-npx playwright test --project=chrome
+- npx playwright test tests/login/login.spec.ts
+- npx playwright test -g "logs in successfully with valid credentials"
+- npx playwright test --project=chrome
 
 ---
 
 ### Debug
-npx playwright test --debug
-await page.pause();
+- npx playwright test --debug
+- await page.pause();
 
 ---
 
 ### Report
-npx playwright show-report
+- npx playwright show-report
 
 ---
 
 ## Environment
 config/environments/.env.<environment>
 Example:
+
 TEST_ENV=dev
 BASE_URL=https://www.saucedemo.com
 SAUCE_USERNAME=standard_user
