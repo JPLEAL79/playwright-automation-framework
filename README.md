@@ -65,24 +65,23 @@ SAUCE_PASSWORD=secret_sauce
 
 ## Project Structure
 
-```text
 playwright-automation-framework
 |
 |-- config/                      Environment configuration
-|   `-- environments/            .env files by target environment
+|   |-- environments/            .env files by target environment
 |       |-- .env.dev
 |       |-- .env.qa
-|       `-- .env.example
+|       |-- .env.example
 |
 |-- fixtures/                    Shared fixtures and reusable states
-|   `-- base.fixture.ts
+|   |-- base.fixture.ts
 |
 |-- pages/                       Page Object Model layer
 |   |-- LoginPage.ts
 |   |-- InventoryPage.ts
 |   |-- CartPage.ts
 |   |-- CheckoutPage.ts
-|   `-- OrderPage.ts
+|   |-- OrderPage.ts
 |
 |-- tests/                       Test scenarios by feature
 |   |-- login/
@@ -90,17 +89,16 @@ playwright-automation-framework
 |   |-- cart/
 |   |-- checkout/
 |   |-- order-confirmation/
-|   `-- test-data/
-|       `-- checkout/
+|   |-- test-data/
+|       |-- checkout/
 |
 |-- utils/                       Shared utilities
-|   `-- logger.ts
+|   |-- logger.ts
 |
 |-- playwright.config.ts         Playwright configuration
 |-- package.json                 Dependencies and scripts
 |-- tsconfig.json                TypeScript configuration
-`-- README.md                    Project documentation
-```
+|-- README.md                    Project documentation
 
 ---
 
