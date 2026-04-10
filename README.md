@@ -53,25 +53,6 @@ This repository implements an automated test framework for SauceDemo using:
 
 ---
 
-## Environment
-
-Use `.env.example` as the base template and create local environment files as needed.
-
-```text
-config/environments/.env.<environment>
-```
-
-Example:
-
-```env
-TEST_ENV=dev
-BASE_URL=https://www.saucedemo.com
-SAUCE_USERNAME=standard_user
-SAUCE_PASSWORD=secret_sauce
-```
-
----
-
 ## Project Structure
 
 ```text
