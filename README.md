@@ -54,18 +54,25 @@ This repository implements an automated test framework for SauceDemo using:
 ---
 
 ## Environment
+
+```text
 config/environments/.env.<environment>
+```
+
 Example:
 
+```env
 TEST_ENV=dev
 BASE_URL=https://www.saucedemo.com
 SAUCE_USERNAME=standard_user
 SAUCE_PASSWORD=secret_sauce
+```
 
 ---
 
 ## Project Structure
 
+```text
 playwright-automation-framework
 |
 |-- config/                      Environment configuration
@@ -100,6 +107,7 @@ playwright-automation-framework
 |-- package.json                 Dependencies and scripts
 |-- tsconfig.json                TypeScript configuration
 |-- README.md                    Project documentation
+```
 
 ---
 
