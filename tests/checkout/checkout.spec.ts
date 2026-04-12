@@ -1,5 +1,4 @@
 import { test } from '../../fixtures/base.fixture';
-import { continueToOrderSummary } from '../../flows/purchase.flow';
 import { checkoutData } from '../test-data/checkout/checkout.data';
 import { logger } from '../../utils/logger';
 
@@ -8,7 +7,9 @@ test.describe('Checkout', () => {
     logger.info('Starting checkout flow.');
 
     // Start with one product in the cart and continue to the summary step.
-    await continueToOrderSummary(cartPage, checkoutPage, checkoutData);
+    await cartPage.clickCheckout();
+    await checkoutPage.fillCheckoutInformation(checkoutData);
+    await checkoutPage.clickContinue();
     await orderPage.assertOrderSummaryPage();
   });
 });

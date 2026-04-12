@@ -1,5 +1,4 @@
 import { test } from '../../fixtures/base.fixture';
-import { addDefaultProductAndOpenCart } from '../../flows/purchase.flow';
 import { logger } from '../../utils/logger';
 
 test.describe('Inventory - Cart', () => {
@@ -7,7 +6,8 @@ test.describe('Inventory - Cart', () => {
     logger.info('Starting inventory to cart flow.');
 
     // Start from an authenticated session and move the default product to the cart.
-    await addDefaultProductAndOpenCart(inventoryPage);
+    await inventoryPage.addProductToCart();
+    await inventoryPage.openShoppingCart();
     await inventoryPage.assertCartPage();
   });
 });

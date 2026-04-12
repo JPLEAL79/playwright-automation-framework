@@ -4,7 +4,6 @@ import { InventoryPage } from '../pages/InventoryPage';
 import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
 import { OrderPage } from '../pages/OrderPage';
-import { addDefaultProductAndOpenCart } from '../flows/purchase.flow';
 
 // Credentials used to log in.
 type Credentials = {
@@ -72,12 +71,13 @@ export const test = base.extend<AppFixtures>({
   },
 
   productInCart: async ({ authenticatedUser, inventoryPage }, use) => {
-    // Depend on authenticatedUser so the login happens before adding a product.
-    // Leave one product in the cart before the test starts.
-    await addDefaultProductAndOpenCart(inventoryPage);
+    // Start with a logged-in user and one product already in the cart.
+    await inventoryPage.addProductToCart();
+    await inventoryPage.openShoppingCart();
     await use();
   },
 });
 
 // Re-export expect so every test imports from one place.
 export { expect };
+
