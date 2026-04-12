@@ -15,8 +15,8 @@ export class InventoryPage {
     this.shoppingCartLink = page.locator('#shopping_cart_container');
   }
 
-  // Add the T-Shirt to the cart.
-  async addItemToCart(): Promise<void> {
+  // Add the default product to the cart.
+  async addProductToCart(): Promise<void> {
     await this.tShirtAddToCartButton.click();
   }
 

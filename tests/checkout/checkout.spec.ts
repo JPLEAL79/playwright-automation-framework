@@ -1,23 +1,14 @@
 import { test } from '../../fixtures/base.fixture';
+import { continueToOrderSummary } from '../../flows/purchase.flow';
 import { checkoutData } from '../test-data/checkout/checkout.data';
 import { logger } from '../../utils/logger';
 
 test.describe('Checkout', () => {
-  test('should continue to the order summary page', async ({ cartPage, checkoutPage, orderPage, itemInCart }) => {
-    // Start the test with one item already in the cart.
-    itemInCart;
+  test('checkout with valid information', async ({ cartPage, checkoutPage, orderPage, productInCart }) => {
     logger.info('Starting checkout flow.');
 
-    // Move from the cart page to checkout.
-    await cartPage.clickCheckout();
-
-    // Fill the checkout form and continue.
-    await checkoutPage.fillCheckoutInformation(checkoutData);
-    logger.info('Checkout information was entered successfully.');
-    await checkoutPage.clickContinue();
-
-    // The user should land on the order summary page.
+    // Start with one product in the cart and continue to the summary step.
+    await continueToOrderSummary(cartPage, checkoutPage, checkoutData);
     await orderPage.assertOrderSummaryPage();
-    logger.info('The order summary page is visible.');
   });
 });

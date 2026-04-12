@@ -6,7 +6,11 @@
   "scripts": {
     "test": "playwright test",
     "test:dev": "set TEST_ENV=dev&& playwright test",
-    "test:qa": "set TEST_ENV=qa&& playwright test"
+    "test:qa": "set TEST_ENV=qa&& playwright test",
+    "test:allure": "playwright test && allure serve ./allure-results",
+    "allure:generate": "allure generate ./allure-results --clean -o ./allure-report",
+    "allure:open": "allure open ./allure-report",
+    "allure:serve": "allure serve ./allure-results"
   },
   "keywords": [],
   "author": "Juan Pablo Leal",
@@ -15,6 +19,8 @@
   "devDependencies": {
     "@playwright/test": "^1.59.1",
     "@types/node": "^25.5.2",
+    "allure-commandline": "^2.38.1",
+    "allure-playwright": "^3.7.1",
     "dotenv": "^17.4.0"
   }
 }
