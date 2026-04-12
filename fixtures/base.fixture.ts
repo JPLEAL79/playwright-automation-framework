@@ -4,6 +4,7 @@ import { InventoryPage } from '../pages/InventoryPage';
 import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
 import { OrderPage } from '../pages/OrderPage';
+import { addDefaultProductAndOpenCart } from '../flows/purchase.flow';
 
 // Credentials used to log in.
 type Credentials = {
@@ -20,7 +21,7 @@ type AppFixtures = {
   cartPage: CartPage;
   checkoutPage: CheckoutPage;
   orderPage: OrderPage;
-  itemInCart: void;
+  productInCart: void;
 };
 
 export const test = base.extend<AppFixtures>({
@@ -70,11 +71,10 @@ export const test = base.extend<AppFixtures>({
     await use(new OrderPage(page));
   },
 
-  itemInCart: async ({ authenticatedUser, inventoryPage }, use) => {
-    // Depend on authenticatedUser so the login happens before adding an item.
-    // Leave one item in the cart before the test starts.
-    await inventoryPage.addItemToCart();
-    await inventoryPage.openShoppingCart();
+  productInCart: async ({ authenticatedUser, inventoryPage }, use) => {
+    // Depend on authenticatedUser so the login happens before adding a product.
+    // Leave one product in the cart before the test starts.
+    await addDefaultProductAndOpenCart(inventoryPage);
     await use();
   },
 });

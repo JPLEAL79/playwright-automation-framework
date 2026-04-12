@@ -48,8 +48,10 @@ This repository implements an automated test framework for SauceDemo using:
 
 ---
 
-### Report
-- npx playwright show-report
+### Allure report
+- npm run test:allure
+- npm run allure:generate
+- npm run allure:open
 
 ---
 

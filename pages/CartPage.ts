@@ -6,19 +6,19 @@ export class CartPage {
 
   // Cart page locators.
   private readonly checkoutButton: Locator;
-  private readonly cartItemLink: Locator;
+  private readonly cartProductLink: Locator;
 
   // Initialize the page object.
   constructor(page: Page) {
     this.page = page;
     this.checkoutButton = this.page.getByRole('button', { name: 'Checkout' });
-    this.cartItemLink = this.page.getByRole('link', { name: 'Sauce Labs Bolt T-Shirt' });
+    this.cartProductLink = this.page.getByRole('link', { name: 'Sauce Labs Bolt T-Shirt' });
   }
 
   // The user should stay on the cart page.
   async assertCartPage(): Promise<void> {
     await expect(this.page).toHaveURL(/cart/);
-    await expect(this.cartItemLink).toBeVisible();
+    await expect(this.cartProductLink).toBeVisible();
   }
 
   // Move from the cart page to checkout.

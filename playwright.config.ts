@@ -33,15 +33,16 @@ export default defineConfig({
   /* Use a conservative local default and a slightly faster CI default. */
   workers: workerCount,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [['allure-playwright']],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     headless: !!process.env.CI,
     /* Base URL to use in actions like `await page.goto('')`. */
     baseURL: process.env.BASE_URL,
+    screenshot: 'only-on-failure',
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    /* Keep evidence only when a test fails. */
+    trace: 'retain-on-failure',
   },
 
   /* Configure projects for major browsers */
