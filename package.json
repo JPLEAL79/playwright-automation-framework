@@ -1,13 +1,21 @@
 {
   "name": "playwright-automation-framework",
   "version": "1.0.0",
-  "description": "",
+  "description": "Playwright and TypeScript framework for end-to-end web automation.",
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
-    "test:dev": "set TEST_ENV=dev&& playwright test",
-    "test:qa": "set TEST_ENV=qa&& playwright test",
-    "test:allure": "playwright test && allure serve ./allure-results",
+    "test:headed": "cross-env PW_HEADED=1 playwright test",
+    "test:dev": "cross-env TEST_ENV=dev playwright test",
+    "test:qa": "cross-env TEST_ENV=qa playwright test",
+    "test:dev:headed": "cross-env TEST_ENV=dev PW_HEADED=1 playwright test",
+    "test:qa:headed": "cross-env TEST_ENV=qa PW_HEADED=1 playwright test",
+    "test:dev:headless": "cross-env TEST_ENV=dev playwright test",
+    "test:qa:headless": "cross-env TEST_ENV=qa playwright test",
+    "allure:clean": "rimraf allure-results allure-report",
+    "test:allure": "npm run test:allure:headless",
+    "test:allure:headed": "npm run allure:clean && cross-env PW_HEADED=1 playwright test && allure serve ./allure-results",
+    "test:allure:headless": "npm run allure:clean && playwright test && allure serve ./allure-results",
     "allure:generate": "allure generate ./allure-results --clean -o ./allure-report",
     "allure:open": "allure open ./allure-report",
     "allure:serve": "allure serve ./allure-results"
@@ -21,6 +29,8 @@
     "@types/node": "^25.5.2",
     "allure-commandline": "^2.38.1",
     "allure-playwright": "^3.7.1",
-    "dotenv": "^17.4.0"
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.4.0",
+    "rimraf": "^6.1.3"
   }
 }

@@ -15,11 +15,11 @@ type Credentials = {
 type AppFixtures = {
   credentials: Credentials;
   loginPage: LoginPage;
-  authenticatedUser: void;
   inventoryPage: InventoryPage;
   cartPage: CartPage;
   checkoutPage: CheckoutPage;
   orderPage: OrderPage;
+  authenticatedUser: void;
   productInCart: void;
 };
 
@@ -43,13 +43,6 @@ export const test = base.extend<AppFixtures>({
     await use(new LoginPage(page));
   },
 
-  authenticatedUser: async ({ loginPage, credentials }, use) => {
-    // Open the app and log in before the test starts.
-    await loginPage.openApplication();
-    await loginPage.login(credentials.username, credentials.password);
-    await use();
-  },
-
   inventoryPage: async ({ page }, use) => {
     // Initialize the inventory page.
     await use(new InventoryPage(page));
@@ -70,6 +63,13 @@ export const test = base.extend<AppFixtures>({
     await use(new OrderPage(page));
   },
 
+  authenticatedUser: async ({ loginPage, credentials }, use) => {
+    // Open the app and log in before the test starts.
+    await loginPage.openApplication();
+    await loginPage.login(credentials.username, credentials.password);
+    await use();
+  },
+
   productInCart: async ({ authenticatedUser, inventoryPage }, use) => {
     // Start with a logged-in user and one product already in the cart.
     await inventoryPage.addProductToCart();
@@ -80,4 +80,3 @@ export const test = base.extend<AppFixtures>({
 
 // Re-export expect so every test imports from one place.
 export { expect };
-

@@ -5,7 +5,7 @@ test.describe('Inventory - Cart', () => {
   test('add product to cart', async ({ inventoryPage, authenticatedUser }) => {
     logger.info('Starting inventory to cart flow.');
 
-    // Start from an authenticated session and move the default product to the cart.
+    // Start logged in, add the T-shirt product, and open the cart.
     await inventoryPage.addProductToCart();
     await inventoryPage.openShoppingCart();
     await inventoryPage.assertCartPage();
