@@ -1,7 +1,7 @@
 import { expect, Locator, Page } from '@playwright/test';
 
 export class OrderPage {
-  // Playwright page instance.
+  // Page instance.
   readonly page: Page;
 
   // Order flow locators.
@@ -9,7 +9,7 @@ export class OrderPage {
   private readonly backHomeButton: Locator;
   private readonly confirmationMessage: Locator;
 
-  // Initialize the page object.
+  // Set up the page object.
   constructor(page: Page) {
     this.page = page;
     this.finishButton = page.getByRole('button', { name: 'Finish' });
@@ -17,23 +17,23 @@ export class OrderPage {
     this.confirmationMessage = page.getByText('Thank you for your order!');
   }
 
-  // The user should land on the order summary page.
+  // Confirm the order summary page is open.
   async assertOrderSummaryPage(): Promise<void> {
     await expect(this.page).toHaveURL(/checkout-step-two/);
   }
 
-  // Finish the order from the summary page.
+  // Finish the order.
   async clickFinish(): Promise<void> {
     await this.finishButton.click();
   }
 
-  // The order confirmation message should be visible.
+  // Confirm the order confirmation message is visible.
   async assertOrderConfirmationPage(): Promise<void> {
     await expect(this.page).toHaveURL(/checkout-complete/);
     await expect(this.confirmationMessage).toBeVisible();
   }
 
-  // Return to the inventory page.
+  // Go back to the inventory page.
   async clickBackHome(): Promise<void> {
     await this.backHomeButton.click();
   }

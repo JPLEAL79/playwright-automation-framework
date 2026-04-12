@@ -2,81 +2,60 @@
 
 Playwright + TypeScript framework for end-to-end web automation.
 
----
+Author: Juan Pablo Leal
 
 ## Overview
-
-This repository implements an automated test framework for SauceDemo using:
-
-- Playwright
-- TypeScript
-- Dotenv
-- Page Object Model
-- Shared fixtures
-
----
+This project automates the main SauceDemo flows with Playwright, TypeScript, shared fixtures, page objects, and Allure reporting.
 
 ## Setup
 - npm install
 - npx playwright install
 
----
-
-## Execution
-
-### All tests
+## Run Tests
+### Full suite
 - npm test
-
----
+- npm run test:headed
 
 ### By environment
 - npm run test:dev
 - npm run test:qa
+- npm run test:dev:headed
+- npm run test:qa:headed
 
----
-
-### Specific execution
+### Specific runs
 - npx playwright test tests/login/login.spec.ts
-- npx playwright test -g "logs in successfully with valid credentials"
+- npx playwright test -g "login with valid credentials"
 - npx playwright test --project=chrome
-
----
 
 ### Debug
 - npx playwright test --debug
-- await page.pause();
+- Add `await page.pause();` in the test where you want to stop the flow.
 
----
-
-### Allure report
-- npm run test:allure
-- npm run allure:generate
-- npm run allure:open
-
----
+### Allure
+- npm run test:allure:headless
+- npm run test:allure:headed
 
 ## Project Structure
-
 ```text
 playwright-automation-framework
 |
-|-- config/                      Environment configuration
-|   |-- environments/            Local `.env` files and shared template
+|-- config/
+|   |-- environments/
 |       |-- .env.example
-|       |-- .env.dev             Local only, not committed
-|       |-- .env.qa              Local only, not committed
+|       |-- .env.dev
+|       |-- .env.qa
 |
-|-- fixtures/                    Shared fixtures and reusable states
+|-- fixtures/
 |   |-- base.fixture.ts
 |
-|-- pages/                       Page Object Model layer
+|-- pages/
 |   |-- LoginPage.ts
 |   |-- InventoryPage.ts
 |   |-- CartPage.ts
 |   |-- CheckoutPage.ts
 |   |-- OrderPage.ts
 |
-|-- tests/                       Test scenarios by feature
+|-- tests/
 |   |-- login/
 |   |-- inventory/
 |   |-- cart/
@@ -85,25 +64,21 @@ playwright-automation-framework
 |   |-- test-data/
 |       |-- checkout/
 |
-|-- utils/                       Shared utilities
+|-- utils/
 |   |-- logger.ts
 |
-|-- playwright.config.ts         Playwright configuration
-|-- package.json                 Dependencies and scripts
-|-- tsconfig.json                TypeScript configuration
-|-- README.md                    Project documentation
+|-- playwright.config.ts
+|-- package.json
+|-- tsconfig.json
+|-- README.md
 ```
 
----
-
 ## Notes
-
-- Credentials are managed through `.env` files
-- Only `.env.example` is versioned; environment-specific `.env` files stay local
-- Fixtures centralize setup and reusable state
-- Test data is separated from test logic
-- The framework follows the Page Object Model pattern
-
----
-
-**Author:** Juan Pablo Leal
+- Environment values live in config/environments.
+- Only .env.example is committed; local .env files stay out of the repo.
+- Fixtures handle shared setup and reusable state.
+- Test data stays separate from test flow.
+- Page objects keep UI actions and page-level assertions together.
+- Tests run headless by default.
+- Use the headed scripts when you want to see the browser.
+- Allure is ready when you need richer reports.
