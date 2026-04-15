@@ -24,12 +24,20 @@ const workerCount = process.env.PW_WORKERS
  */
 export default defineConfig({
   testDir: './tests',
+
+  // Maximum time allowed for a full test.
+  timeout: 30 * 1000,
+  expect: {
+    // Maximum time allowed for an assertion.
+    timeout: 5 * 1000,
+  },
+
   /* Keep execution predictable in local and corporate environments. */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 1 : 0,
   /* Use a conservative local default and a slightly faster CI default. */
   workers: workerCount,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
@@ -45,7 +53,7 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
 
-  /* Configure projects for major browsers */
+  /* Configure the default desktop projects. */
   projects: [
     {
       name: 'chrome',
@@ -61,5 +69,21 @@ export default defineConfig({
         browserName: 'firefox',
       },
     },
+
+    /* Enable these only when you want to run mobile coverage. */
+    // {
+    //   name: 'iphone-15',
+    //   use: {
+    //     ...devices['iPhone 15'],
+    //     browserName: 'webkit',
+    //   },
+    // },
+    // {
+    //   name: 'galaxy-s23',
+    //   use: {
+    //     ...devices['Galaxy S23'],
+    //     browserName: 'chromium',
+    //   },
+    // },
   ],
 });
