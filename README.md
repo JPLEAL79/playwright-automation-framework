@@ -8,32 +8,35 @@ Author: Juan Pablo Leal
 This project automates the main SauceDemo flows with Playwright, TypeScript, shared fixtures, page objects, and Allure reporting.
 
 ## Setup
-- npm install
-- npx playwright install
+- `npm install`
+- `npx playwright install`
+
+Create the environment file you need under `config/environments`, for example `.env.dev`.
+Use `.env.example` as the reference.
 
 ## Run Tests
 ### Full suite
-- npm test
-- npm run test:headed
+- `npm test`
+- `npm run test:headed`
 
 ### By environment
-- npm run test:dev
-- npm run test:qa
-- npm run test:dev:headed
-- npm run test:qa:headed
+- `npm run test:dev`
+- `npm run test:qa`
+- `npm run test:dev:headed`
+- `npm run test:qa:headed`
 
 ### Specific runs
-- npx playwright test tests/login/login.spec.ts
-- npx playwright test -g "login with valid credentials"
-- npx playwright test --project=chrome
+- `npx playwright test tests/login/login.spec.ts`
+- `npx playwright test -g "login with valid credentials"`
+- `npx playwright test --project=chrome`
 
 ### Debug
-- npx playwright test --debug
+- `npx playwright test --debug`
 - Add `await page.pause();` in the test where you want to stop the flow.
 
 ### Allure
-- npm run test:allure:headless
-- npm run test:allure:headed
+- `npm run test:allure:headless`
+- `npm run test:allure:headed`
 
 ## Project Structure
 ```text
@@ -42,8 +45,8 @@ playwright-automation-framework
 |-- config/
 |   |-- environments/
 |       |-- .env.example
-|       |-- .env.dev
-|       |-- .env.qa
+|       |-- .env.dev       (local)
+|       |-- .env.qa        (local)
 |
 |-- fixtures/
 |   |-- base.fixture.ts
@@ -81,4 +84,5 @@ playwright-automation-framework
 - Page objects keep UI actions and page-level assertions together.
 - Tests run headless by default.
 - Use the headed scripts when you want to see the browser.
+- Traces are kept only when a test fails.
 - Allure is ready when you need richer reports.
