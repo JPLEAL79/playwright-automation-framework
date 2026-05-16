@@ -3,7 +3,6 @@ import { checkoutData } from '../test-data/checkout/checkout.data';
 import { logger } from '../../utils/logger';
 
 test.describe('Checkout', () => {
-  // Start with the T-shirt product in the cart and move to the order summary.
   test('checkout with valid information', async ({ cartPage, checkoutPage, orderPage, productInCart }) => {
     logger.info('Starting checkout flow.');
 

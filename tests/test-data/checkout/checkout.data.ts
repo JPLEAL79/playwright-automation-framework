@@ -1,4 +1,3 @@
-// Reusable checkout data for the test flow.
 export const checkoutData = {
   firstName: 'Juan',
   lastName: 'Leal',

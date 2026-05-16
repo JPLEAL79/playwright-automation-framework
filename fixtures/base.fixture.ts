@@ -5,15 +5,14 @@ import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
 import { OrderPage } from '../pages/OrderPage';
 
-// Credentials used to log in.
 type Credentials = {
   username: string;
   password: string;
 };
 
-// Shared fixtures available in the tests.
 type AppFixtures = {
   credentials: Credentials;
+  productName: string;
   loginPage: LoginPage;
   inventoryPage: InventoryPage;
   cartPage: CartPage;
@@ -24,8 +23,11 @@ type AppFixtures = {
 };
 
 export const test = base.extend<AppFixtures>({
+  productName: async ({}, use) => {
+    await use('Sauce Labs Bolt T-Shirt');
+  },
+
   credentials: async ({}, use) => {
-    // Read login data from the environment.
     const username = process.env.SAUCE_USERNAME;
     const password = process.env.SAUCE_PASSWORD;
 
@@ -39,44 +41,36 @@ export const test = base.extend<AppFixtures>({
   },
 
   loginPage: async ({ page }, use) => {
-    // Initialize the login page.
     await use(new LoginPage(page));
   },
 
   inventoryPage: async ({ page }, use) => {
-    // Initialize the inventory page.
     await use(new InventoryPage(page));
   },
 
   cartPage: async ({ page }, use) => {
-    // Initialize the cart page.
     await use(new CartPage(page));
   },
 
   checkoutPage: async ({ page }, use) => {
-    // Initialize the checkout page.
     await use(new CheckoutPage(page));
   },
 
   orderPage: async ({ page }, use) => {
-    // Initialize the order page.
     await use(new OrderPage(page));
   },
 
   authenticatedUser: async ({ loginPage, credentials }, use) => {
-    // Open the app and log in before the test starts.
     await loginPage.openApplication();
     await loginPage.login(credentials.username, credentials.password);
     await use();
   },
 
-  productInCart: async ({ authenticatedUser, inventoryPage }, use) => {
-    // Start with a logged-in user and one product already in the cart.
-    await inventoryPage.addProductToCart();
+  productInCart: async ({ authenticatedUser, inventoryPage, productName }, use) => {
+    await inventoryPage.addProductToCart(productName);
     await inventoryPage.openShoppingCart();
     await use();
   },
 });
 
-// Re-export expect so every test imports from one place.
 export { expect };
