@@ -28,10 +28,6 @@ export class LoginPage {
     await this.loginButton.click();
   }
 
-  async submitLogin(): Promise<void> {
-    await this.loginButton.click();
-  }
-
   async assertSuccessfulLogin(): Promise<void> {
     await expect(this.page).toHaveURL(/inventory/);
     await expect(this.productsTitle).toBeVisible();

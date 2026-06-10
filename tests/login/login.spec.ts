@@ -14,7 +14,7 @@ test.describe('Login', () => {
 
   test('login with empty credentials', async ({ loginPage }) => {
     logger.info('Starting empty login validation.');
-    await loginPage.submitLogin();
+    await loginPage.login('', '');
     await loginPage.assertUsernameRequiredError();
   });
 });
