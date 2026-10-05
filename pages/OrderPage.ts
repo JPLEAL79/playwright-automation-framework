@@ -1,5 +1,8 @@
 import { expect, Locator, Page } from '@playwright/test';
 
+/**
+ * Checkout paso dos (resumen de la orden) y página de confirmación de la orden.
+ */
 export class OrderPage {
   readonly page: Page;
 

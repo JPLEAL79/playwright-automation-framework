@@ -1,3 +1,7 @@
+/**
+ * Logger simple por consola con fecha y hora en la zona horaria America/Santiago.
+ */
+
 type LogLevel = 'INFO' | 'WARN' | 'ERROR';
 
 class Logger {

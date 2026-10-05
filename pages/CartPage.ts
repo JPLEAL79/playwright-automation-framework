@@ -1,5 +1,8 @@
 import { Page, expect, Locator } from '@playwright/test';
 
+/**
+ * Carrito de compras: lista los productos agregados e inicia el checkout.
+ */
 export class CartPage {
   readonly page: Page;
 
@@ -12,7 +15,7 @@ export class CartPage {
 
   async assertCartPage(productName: string): Promise<void> {
     await expect(this.page).toHaveURL(/cart/);
-    await expect(this.page.getByRole('link', { name: productName })).toBeVisible();
+    await expect(this.page.locator('.cart_item').filter({ hasText: productName })).toBeVisible();
   }
 
   async clickCheckout(): Promise<void> {

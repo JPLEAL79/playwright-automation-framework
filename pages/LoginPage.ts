@@ -1,5 +1,8 @@
 import { expect, Locator, Page } from '@playwright/test';
 
+/**
+ * Pantalla de login: punto de entrada de la aplicación.
+ */
 export class LoginPage {
   readonly page: Page;
 

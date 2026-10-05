@@ -10,8 +10,7 @@
     "test:qa": "cross-env TEST_ENV=qa playwright test",
     "test:dev:headed": "cross-env TEST_ENV=dev PW_HEADED=1 playwright test",
     "test:qa:headed": "cross-env TEST_ENV=qa PW_HEADED=1 playwright test",
-    "test:dev:headless": "cross-env TEST_ENV=dev playwright test",
-    "test:qa:headless": "cross-env TEST_ENV=qa playwright test",
+    "typecheck": "tsc --noEmit",
     "allure:clean": "rimraf allure-results allure-report",
     "test:allure": "npm run test:allure:headless",
     "test:allure:headed": "npm run allure:clean && cross-env PW_HEADED=1 playwright test && allure serve ./allure-results",
@@ -31,6 +30,7 @@
     "allure-playwright": "^3.7.1",
     "cross-env": "^10.1.0",
     "dotenv": "^17.4.0",
-    "rimraf": "^6.1.3"
+    "rimraf": "^6.1.3",
+    "typescript": "^7.0.2"
   }
 }

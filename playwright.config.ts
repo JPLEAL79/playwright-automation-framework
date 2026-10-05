@@ -2,6 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 import path from 'path';
 
+// Carga config/environments/.env.<TEST_ENV> antes de que Playwright lea la configuración.
 const testEnvironment = process.env.TEST_ENV ?? 'dev';
 const environmentFile = path.resolve(
   __dirname,
@@ -10,9 +11,14 @@ const environmentFile = path.resolve(
   `.env.${testEnvironment}`
 );
 
-// Load the selected environment file before Playwright reads the config.
-dotenv.config({ path: environmentFile });
+dotenv.config({ path: environmentFile, quiet: true });
 
+// Falla de inmediato en vez de ejecutar en silencio contra la aplicación equivocada.
+if (!process.env.BASE_URL) {
+  throw new Error(`BASE_URL no está definida. Revisa ${environmentFile}.`);
+}
+
+// PW_WORKERS reemplaza el valor por defecto: 1 worker en local, 2 en CI.
 const workerCount = process.env.PW_WORKERS
   ? Number(process.env.PW_WORKERS)
   : process.env.CI
@@ -20,40 +26,34 @@ const workerCount = process.env.PW_WORKERS
     : 1;
 
 /**
- * See https://playwright.dev/docs/test-configuration.
+ * Ver https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
   testDir: './tests',
 
-  // Maximum time allowed for a full test.
+  // Tiempo máximo por test y por aserción.
   timeout: 30 * 1000,
   expect: {
-    // Maximum time allowed for an assertion.
     timeout: 5 * 1000,
   },
 
-  /* Keep execution predictable in local and corporate environments. */
   fullyParallel: false,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
+  // Hace fallar el build de CI si quedó un test.only en el código.
   forbidOnly: !!process.env.CI,
-  /* Retry on CI only */
   retries: process.env.CI ? 1 : 0,
-  /* Use a conservative local default and a slightly faster CI default. */
   workers: workerCount,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [['allure-playwright']],
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  use: {
-    headless: process.env.PW_HEADED !== '1',
-    /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: process.env.BASE_URL,
-    screenshot: 'only-on-failure',
 
-    /* Keep evidence only when a test fails. */
+  use: {
+    // Headless por defecto; usa PW_HEADED=1 para ver el navegador.
+    headless: process.env.PW_HEADED !== '1',
+    // Permite navegar con rutas relativas, por ejemplo page.goto('/').
+    baseURL: process.env.BASE_URL,
+    // Guarda evidencia solo cuando un test falla.
+    screenshot: 'only-on-failure',
     trace: 'retain-on-failure',
   },
 
-  /* Configure the default desktop projects. */
   projects: [
     {
       name: 'chrome',
@@ -69,21 +69,5 @@ export default defineConfig({
         browserName: 'firefox',
       },
     },
-
-    /* Enable these only when you want to run mobile coverage. */
-    // {
-    //   name: 'iphone-15',
-    //   use: {
-    //     ...devices['iPhone 15'],
-    //     browserName: 'webkit',
-    //   },
-    // },
-    // {
-    //   name: 'galaxy-s23',
-    //   use: {
-    //     ...devices['Galaxy S23'],
-    //     browserName: 'chromium',
-    //   },
-    // },
   ],
 });

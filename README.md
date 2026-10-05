@@ -11,8 +11,11 @@ This project automates the main SauceDemo flows with Playwright, TypeScript, sha
 - `npm install`
 - `npx playwright install`
 
-Create the environment file you need under `config/environments`, for example `.env.dev`.
-Use `.env.example` as the reference.
+Copy `config/environments/.env.example` to `.env.dev` (or `.env.qa`) in the same folder and fill in the values.
+The run stops with a clear error if `BASE_URL` is missing.
+
+## Typecheck
+- `npm run typecheck`
 
 ## Run Tests
 ### Full suite

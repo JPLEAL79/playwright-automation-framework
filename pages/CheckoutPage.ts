@@ -6,6 +6,9 @@ export type CheckoutInformation = {
   postalCode: string;
 };
 
+/**
+ * Checkout paso uno: formulario con los datos del cliente.
+ */
 export class CheckoutPage {
   readonly page: Page;
 

@@ -1,5 +1,8 @@
 import { expect, Page } from '@playwright/test';
 
+/**
+ * Listado de productos que se muestra después del login.
+ */
 export class InventoryPage {
   readonly page: Page;
 
@@ -8,18 +11,14 @@ export class InventoryPage {
   }
 
   async addProductToCart(productName: string): Promise<void> {
-    await this.page
-      .locator('.inventory_item')
-      .filter({ hasText: productName })
-      .getByRole('button', { name: 'Add to cart' })
-      .click();
+    const product = this.page.locator('.inventory_item').filter({ hasText: productName });
+
+    await product.getByRole('button', { name: 'Add to cart' }).click();
+    // El botón cambia a "Remove" cuando el producto ya está en el carrito.
+    await expect(product.getByRole('button', { name: 'Remove' })).toBeVisible();
   }
 
   async openShoppingCart(): Promise<void> {
     await this.page.locator('#shopping_cart_container').click();
-  }
-
-  async assertCartPage(): Promise<void> {
-    await expect(this.page).toHaveURL(/cart/);
   }
 }
